@@ -1,29 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_intro/components/question_button.dart';
+import 'package:flutter_intro/components/question.dart';
 
 class HomePage extends StatefulWidget {
-
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  int _questionIndex = 0;
 
-  int questionIndex = 0;
-
-  void answerQuestion(){
+  void _answerQuestion() {
     setState(() {
-      questionIndex += 1;
+      _questionIndex += 1;
     });
-    print(questionIndex);
-
+    print(_questionIndex);
   }
 
   @override
   Widget build(BuildContext context) {
     List<String> questions = [
       'What\'s your favourite colour?',
-      'What\'s your animal?',
+      'What\'s your favourite animal?',
     ];
 
     return Scaffold(
@@ -32,20 +31,16 @@ class _HomePageState extends State<HomePage> {
       ),
       body: SafeArea(
         child: Container(
-          child:Column(
-          children: [
-            Container(child: Text(questions[questionIndex]),),
-            Column(children: [
-              Icon(FontAwesomeIcons.question),
-              SizedBox(
-                height: 15.0,
+          alignment: Alignment.center,
+          child: Column(
+            children: [
+              Question(questionText: questions[_questionIndex]),
+              GestureDetector(
+                onTap: _answerQuestion,
+                child: QuestionButton(),
               ),
-              RaisedButton(onPressed: answerQuestion
-
-              )
-            ]),
             ],
-),
+          ),
         ),
       ),
     );
